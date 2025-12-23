@@ -1,0 +1,6 @@
+db.sqlite3
+local_*.py
+venv
+.idea/
+*.pyc
+.vscode
