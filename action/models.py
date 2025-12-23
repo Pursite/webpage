@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from lib.basemodel import BaseModel
 from post.models import Post
 
+
 class Comment(BaseModel):
     text = models.TextField(_('text'))
     user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
@@ -15,4 +16,3 @@ class Comment(BaseModel):
 
     def __str__(self):
         return f"{self.user} - {self.post}"
-

@@ -1,11 +1,19 @@
-from django.contrib.admin import register
 from django.contrib import admin
-
 from .models import Product
 
-@register(Product)
+
+@admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "user", "created_at")
-    list_filter = ("created_at",)
-    search_fields = ("title", "user__username")
-    ordering = ("-created_at",)
+    list_display = ("id", "user", "title", "created_at")
+    search_fields = ("user__username", "id")
+    ordering = ("created_at",)
+    readonly_fields = ("created_at", "modified_at")
+
+    fieldsets = (
+        (None, {
+            "fields": ("title", "user")
+        }),
+        ("Meta info", {
+            "fields": ("created_at", "modified_at"),
+        }),
+    )
