@@ -18,11 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('page.urls')),
-    path('product/', include('product.urls')),
-    path('post/', include('post.urls')),
-    path('action/', include('action.urls'))
+    path('api/token/', TokenObtainPairView.as_view(), name='token-obtain-pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
+    path('api/action/', include('apps.action.urls'), name='token-refresh'),
+    path('api/product/', include('apps.product.urls')),
+    path('api/post/', include('apps.post.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

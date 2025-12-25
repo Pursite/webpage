@@ -1,6 +1,45 @@
+# --- Python کش و فایل‌های اجرایی ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+.env/
+venv/
+.venv/
+ENV/
+build/
+dist/
+
+# --- Django فایل‌های دیتابیس و رسانه ---
+*.log
+local_settings.py
 db.sqlite3
-local_*.py
-venv
+db.sqlite3-journal
+media/
+staticfiles/
+
+# --- فایل‌های حساس (Secrets) ---
+.env
+.flaskenv
+secrets.json
+
+# --- فایل‌های سیستم عامل (Linux/Mac/Windows) ---
+.DS_Store
+Thumbs.db
+.directory
+*~
+*.swp
+
+# --- فایل‌های ادیتور (PyCharm, VSCode) ---
 .idea/
-*.pyc
-.vscode
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# --- فایل‌های بیلد و پکیج ---
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST

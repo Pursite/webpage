@@ -10,26 +10,27 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-import os
+import os, sys
+from datetime import timedelta
 from pathlib import Path
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+
 env = environ.Env(
     DJANGO_DEBUG=(bool, False),
 )
-
 
 environ.Env.read_env(BASE_DIR / ".env")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 
-
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -40,12 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'page.apps.PageConfig',
+    'django_filters',
     'rest_framework',
-    'product.apps.ProductConfig',
-    'post.apps.PostConfig',
-    'action.apps.ActionConfig',
-    'lib'
+    'rest_framework_simplejwt',
+    'apps.product.apps.ProductConfig',
+    'apps.post.apps.PostConfig',
+    'apps.action.apps.ActionConfig',
+    'apps.lib'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +86,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -94,7 +95,6 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -114,13 +114,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -128,27 +127,38 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
+    "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.SessionAuthentication",
-    ) if DEBUG else(
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),"DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-    "PAGE_SIZE": 5,
-
-    'DEFAULT_THROTTLE_CLASSES': [
-        # 'rest_framework.throttling.AnonRateThrottle',
-        # 'rest_framework.throttling.UserRateThrottle'
-        'rest_framework.throttling.ScopedRateThrottle'
     ],
+
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+
     'DEFAULT_THROTTLE_RATES': {
-        # 'anon': '3/m',
-        # 'user': '5/m',
-        'custom': '5/m'
+        'user': '20/minute',
+        'anon': '10/minute',
     },
+
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+    ),
+
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning'
+}
+
+APPEND_SLASH = False
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'AUTH_HEADER_TYPES': ('Bearer',)
 }
 
 
@@ -158,13 +168,13 @@ REST_FRAMEWORK = {
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
-
-
-
+CELERY_TIMEZONE = "Asia/Tehran"
+CELERY_TASK_TRACK_STARTED = True
