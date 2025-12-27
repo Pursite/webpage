@@ -4,7 +4,24 @@ from django.db import models
 from apps.lib.basemodel import BaseModel
 from apps.product.models.product_model import Product
 
+
 class Post(BaseModel):
+    """
+        Represents a user-generated advertisement or listing for a product.
+
+        This model links a specific product from the catalog to a user who
+        wants to sell or showcase it. It includes pricing, location, and status.
+
+        Attributes:
+            product (ForeignKey): Reference to the master product from the catalog.
+            user (ForeignKey): The user who created this listing/post.
+            caption (TextField): A descriptive text provided by the user.
+            location (CharField): Geographical location for the listing.
+            price (DecimalField): The selling price set by the user.
+            is_active (BooleanField): Toggle to show/hide the post from the public feed.
+    """
+
+
     product = models.ForeignKey(Product, related_name='posts', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
     caption = models.TextField(_('caption'), blank=True)
@@ -17,5 +34,4 @@ class Post(BaseModel):
         verbose_name_plural = _("Posts")
 
     def __str__(self):
-        return f"{self.user.username} - {self.product.user}"
-
+        return f"{self.user.username} - {self.product.name}"

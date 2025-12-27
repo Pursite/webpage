@@ -18,7 +18,6 @@ import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 env = environ.Env(
@@ -30,7 +29,7 @@ environ.Env.read_env(BASE_DIR / ".env")
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["127.0.0.1", "localhost"])
 
 # Application definition
 
@@ -43,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_filters',
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
     'rest_framework_simplejwt',
     'apps.product.apps.ProductConfig',
     'apps.post.apps.PostConfig',
@@ -133,6 +133,8 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
     ],
 
+    "DEFAULT_SCHEMA_CLASS": ["drf_spectacular.openapi.AutoSchema"],
+
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
@@ -153,6 +155,78 @@ REST_FRAMEWORK = {
 
 APPEND_SLASH = False
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+
+    "formatters": {
+        "default": {
+            "format": "[{asctime}] {levelname} {name} - {message}",
+            "style": "{",
+        },
+    },
+
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "default",
+        },
+
+        "system_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(BASE_DIR, "logs/system.log"),
+            "maxBytes": 1024 * 1024 * 5,  # 5MB
+            "backupCount": 3,
+            "formatter": "default",
+        },
+
+        "activity_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(BASE_DIR, "logs/activity.log"),
+            "maxBytes": 1024 * 1024 * 5,
+            "backupCount": 3,
+            "formatter": "default",
+        },
+
+        "security_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(BASE_DIR, "logs/security.log"),
+            "maxBytes": 1024 * 1024 * 5,
+            "backupCount": 5,
+            "formatter": "default",
+        },
+    },
+
+    "loggers": {
+        "django": {
+            "handlers": ["system_file", "console"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+        "django.security": {
+            "handlers": ["security_file"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "system": {
+            "handlers": ["system_file", "console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "security": {
+            "handlers": ["security_file", "console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "activity": {
+            "handlers": ["activity_file", "console"],
+            "level": "INFO",
+            "propagate": False,
+        }
+    },
+}
+
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
@@ -161,6 +235,9 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',)
 }
 
+SIMPLE_JWT.update({
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+})
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

@@ -27,4 +27,5 @@ urlpatterns = [
     path('api/action/', include('apps.action.urls'), name='token-refresh'),
     path('api/product/', include('apps.product.urls')),
     path('api/post/', include('apps.post.urls')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

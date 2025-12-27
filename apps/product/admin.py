@@ -1,8 +1,7 @@
 from django.contrib import admin
 
-from .models.brand_model import Brand
-from .models.category_model import Category
-from .models.product_image import ProductImage
+from .models.category_brand_model import Category, Brand
+from .models.product_image_model import ProductImage
 from .models.product_model import Product
 
 
