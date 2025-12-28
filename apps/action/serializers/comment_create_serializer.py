@@ -12,7 +12,6 @@ class CommentCreateSerializer(serializers.ModelSerializer):
         3. Depth: Restricts replies to a maximum of one level (no nested replies).
     """
 
-
     class Meta:
         model = Comment
         fields = ['post', 'text', 'parent', 'created_at']

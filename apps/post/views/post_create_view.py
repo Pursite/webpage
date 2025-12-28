@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.throttling import UserRateThrottle
 from ..seializers.post_create_serializer import PostCreateSerializer
+from ..services.services import post_create_service
 from ...lib.loggers import AppLogger
 
 
@@ -18,9 +19,7 @@ class PostCreateAPIView(APIView):
         - Logging: Tracks successful creation and validation errors.
     """
 
-
     permission_classes = [IsAuthenticatedOrReadOnly]
-    serializer_class = PostCreateSerializer
     throttle_classes = [UserRateThrottle]
 
     def post(self, request):
@@ -28,12 +27,6 @@ class PostCreateAPIView(APIView):
             Validate and save a new post based on catalog products.
         """
 
-
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            post = serializer.save(user=request.user)
-            AppLogger.log_activity(f"Post created id={post.id} for product={post.product_id}", user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        AppLogger.log_activity(f"Post create failed: {serializer.errors}", user=request.user, status="ERROR")
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        post = post_create_service(user=request.user, data=request.data)
+        serializer = PostCreateSerializer(post)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -1,9 +1,8 @@
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from ..models.comment_model import Comment
+from ..selectors.selectors import comment_list_selector
 from ..serializers.comment_detail_serializer import CommentDetailSerializer
-from ...lib.pagination import StandardPagePagination
 
 
 class CommentListAPIView(APIView):
@@ -18,29 +17,14 @@ class CommentListAPIView(APIView):
             for users and nested replies.
     """
 
-
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get(self, request, post_id):
-        """
-            Retrieves root comments (parent=None) for a given post_id.
-            Implements pagination and orders by the most recent comments.
-        """
+        data = comment_list_selector(post_id=post_id, request=request, view=self)
 
+        if data["page"] is not None:
+            serializer = CommentDetailSerializer(data["page"], many=True)
+            return data["paginator"].get_paginated_response(serializer.data)
 
-        comments = Comment.objects.filter(
-            post_id=post_id,
-            parent=None
-        ).select_related('user').prefetch_related('replies', 'replies__user').order_by('-created_at')
-
-        paginator = StandardPagePagination()
-        page = paginator.paginate_queryset(comments, request, view=self)
-
-        if page is not None:
-            serializer = CommentDetailSerializer(page, many=True)
-            return paginator.get_paginated_response(serializer.data)
-
-        serializer = CommentDetailSerializer(comments, many=True)
+        serializer = CommentDetailSerializer(data["queryset"], many=True)
         return Response(serializer.data)
-
-

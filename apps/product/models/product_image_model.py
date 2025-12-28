@@ -32,6 +32,5 @@ class ProductImage(models.Model):
     class Meta:
         unique_together = ['product', 'is_feature']
 
-
     def __str__(self):
         return f"Image for {self.product.name}"

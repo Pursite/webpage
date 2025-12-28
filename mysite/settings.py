@@ -15,7 +15,6 @@ from datetime import timedelta
 from pathlib import Path
 import environ
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
@@ -42,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_filters',
     'rest_framework',
-    'rest_framework_simplejwt.token_blacklist',
     'rest_framework_simplejwt',
     'apps.product.apps.ProductConfig',
     'apps.post.apps.PostConfig',
@@ -132,8 +130,6 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ],
-
-    "DEFAULT_SCHEMA_CLASS": ["drf_spectacular.openapi.AutoSchema"],
 
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',

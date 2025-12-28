@@ -13,7 +13,6 @@ class PostDetailSerializer(serializers.ModelSerializer):
         - 'comments': A curated list of the top 10 recent parent comments.
     """
 
-
     user = serializers.CharField(source='user.username', read_only=True)
     product = ProductListSerializer(read_only=True)
     comments = serializers.SerializerMethodField()
@@ -27,7 +26,6 @@ class PostDetailSerializer(serializers.ModelSerializer):
             Retrieves the 10 most recent root comments for this post.
             Filters out replies to prevent nested overload in the detail view.
         """
-
 
         main_comments = obj.comments.filter(parent__isnull=True).order_by('-created_at')[:10]
         return CommentDetailSerializer(main_comments, many=True).data

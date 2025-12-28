@@ -10,7 +10,6 @@ class CommentDetailSerializer(serializers.ModelSerializer):
         populates them for top-level comments (where parent_id is None).
     """
 
-
     user = serializers.CharField(source="user.username", read_only=True)
     replies = serializers.SerializerMethodField()
 
@@ -22,5 +21,3 @@ class CommentDetailSerializer(serializers.ModelSerializer):
         if obj.parent_id is None:
             return CommentDetailSerializer(obj.replies.all(), many=True).data
         return []
-
-

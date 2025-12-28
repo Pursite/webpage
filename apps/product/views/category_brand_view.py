@@ -17,7 +17,6 @@ class CategoryListAPIView(APIView):
         Used by: Frontend navigation and product filtering menus.
     """
 
-
     permission_classes = [AllowAny]
 
     def get(self, request):
@@ -35,7 +34,6 @@ class BrandListAPIView(APIView):
         Ordering: Sorted by ID.
         Used by: Brand selection filters and product detail labels.
     """
-
 
     permission_classes = [AllowAny]
 

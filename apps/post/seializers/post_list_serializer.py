@@ -10,7 +10,6 @@ class PostListSerializer(serializers.ModelSerializer):
         the product name and basic listing details.
     """
 
-
     product_name = serializers.CharField(source='product.name', read_only=True)
 
     class Meta:

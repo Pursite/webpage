@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('product', '0002_alter_product_options_remove_product_description'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
@@ -21,6 +20,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='product',
             name='user',
-            field=models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, related_name='products', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, related_name='products',
+                                    to=settings.AUTH_USER_MODEL),
         ),
     ]

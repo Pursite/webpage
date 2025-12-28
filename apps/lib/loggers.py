@@ -1,7 +1,9 @@
 import logging
+
 activity_logger = logging.getLogger("activity")
 security_logger = logging.getLogger("security")
 system_logger = logging.getLogger("system")
+
 
 class AppLogger:
     @staticmethod
@@ -19,7 +21,6 @@ class AppLogger:
         user_info = f"user={user.id if user else 'Anon'}"
         path_info = f"path={path if path else 'N/A'}"
         security_logger.warning(f"{msg} | {user_info} | {path_info}")
-
 
     @staticmethod
     def log_system_error(msg, include_traceback=False):

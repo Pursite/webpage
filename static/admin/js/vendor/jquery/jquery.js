@@ -811,7 +811,7 @@ function find( selector, context, results, seed ) {
 
 	results = results || [];
 
-	// Return early from calls with invalid selector or context
+	// Return early from calls with invalid selectors or context
 	if ( typeof selector !== "string" || !selector ||
 		nodeType !== 1 && nodeType !== 9 && nodeType !== 11 ) {
 
@@ -825,11 +825,11 @@ function find( selector, context, results, seed ) {
 
 		if ( documentIsHTML ) {
 
-			// If the selector is sufficiently simple, try using a "get*By*" DOM method
+			// If the selectors is sufficiently simple, try using a "get*By*" DOM method
 			// (excepting DocumentFragment context, where the methods don't exist)
 			if ( nodeType !== 11 && ( match = rquickExpr.exec( selector ) ) ) {
 
-				// ID selector
+				// ID selectors
 				if ( ( m = match[ 1 ] ) ) {
 
 					// Document context
@@ -860,12 +860,12 @@ function find( selector, context, results, seed ) {
 						}
 					}
 
-				// Type selector
+				// Type selectors
 				} else if ( match[ 2 ] ) {
 					push.apply( results, context.getElementsByTagName( selector ) );
 					return results;
 
-				// Class selector
+				// Class selectors
 				} else if ( ( m = match[ 3 ] ) && context.getElementsByClassName ) {
 					push.apply( results, context.getElementsByClassName( m ) );
 					return results;
@@ -881,8 +881,8 @@ function find( selector, context, results, seed ) {
 
 				// qSA considers elements outside a scoping root when evaluating child or
 				// descendant combinators, which is not what we want.
-				// In such cases, we work around the behavior by prefixing every selector in the
-				// list with an ID selector referencing the scope context.
+				// In such cases, we work around the behavior by prefixing every selectors in the
+				// list with an ID selectors referencing the scope context.
 				// The technique has to be used as well when a leading combinator is used
 				// as such selectors are not recognized by querySelectorAll.
 				// Thanks to Andrew Dupont for this technique.
@@ -909,7 +909,7 @@ function find( selector, context, results, seed ) {
 						}
 					}
 
-					// Prefix every selector in the list
+					// Prefix every selectors in the list
 					groups = tokenize( selector );
 					i = groups.length;
 					while ( i-- ) {
@@ -963,7 +963,7 @@ function createCache() {
 }
 
 /**
- * Mark a function for special use by jQuery selector module
+ * Mark a function for special use by jQuery selectors module
  * @param {Function} fn The function to mark
  */
 function markFunction( fn ) {
@@ -1093,7 +1093,7 @@ function createPositionalPseudo( fn ) {
 }
 
 /**
- * Checks a node for validity as a jQuery selector context
+ * Checks a node for validity as a jQuery selectors context
  * @param {Element|Object=} context
  * @returns {Element|Object|Boolean} The input node if acceptable, otherwise a falsy value
  */
@@ -1175,7 +1175,7 @@ function setDocument( node ) {
 	// Make sure the `:has()` argument is parsed unforgivingly.
 	// We include `*` in the test to detect buggy implementations that are
 	// _selectively_ forgiving (specifically when the list includes at least
-	// one valid selector).
+	// one valid selectors).
 	// Note that we treat complete lack of support for `:has()` as if it were
 	// spec-compliant support, which is fine because use of `:has()` in such
 	// environments will fail in the qSA path and fall back to jQuery traversal
@@ -1293,7 +1293,7 @@ function setDocument( node ) {
 
 		// Support: iOS 8 only
 		// https://bugs.webkit.org/show_bug.cgi?id=136851
-		// In-page `selector#id sibling-combinator selector` fails
+		// In-page `selectors#id sibling-combinator selectors` fails
 		if ( !el.querySelectorAll( "a#" + expando + "+*" ).length ) {
 			rbuggyQSA.push( ".#.+[+~]" );
 		}
@@ -1313,7 +1313,7 @@ function setDocument( node ) {
 		el.appendChild( input ).setAttribute( "name", "D" );
 
 		// Support: IE 9 - 11+
-		// IE's :disabled selector does not pick up the children of disabled fieldsets
+		// IE's :disabled selectors does not pick up the children of disabled fieldsets
 		// Support: Chrome <=105+, Firefox <=104+, Safari <=15.4+
 		// In some of the document kinds, these selectors wouldn't work natively.
 		// This is probably OK but for backwards compatibility we want to maintain
@@ -1342,7 +1342,7 @@ function setDocument( node ) {
 		// Support: Chrome 105 - 110+, Safari 15.4 - 16.3+
 		// Our regular `try-catch` mechanism fails to detect natively-unsupported
 		// pseudo-classes inside `:has()` (such as `:has(:contains("Foo"))`)
-		// in browsers that parse the `:has()` argument as a forgiving selector list.
+		// in browsers that parse the `:has()` argument as a forgiving selectors list.
 		// https://drafts.csswg.org/selectors/#relational now requires the argument
 		// to be parsed unforgivingly, but browsers have not yet fully adjusted.
 		rbuggyQSA.push( ":has" );
@@ -1854,7 +1854,7 @@ Expr = jQuery.expr = {
 		// Potentially complex pseudos
 		not: markFunction( function( selector ) {
 
-			// Trim the selector passed to compile
+			// Trim the selectors passed to compile
 			// to avoid treating leading and trailing
 			// spaces as combinators
 			var input = [],
@@ -1898,7 +1898,7 @@ Expr = jQuery.expr = {
 			};
 		} ),
 
-		// "Whether an element is represented by a :lang() selector
+		// "Whether an element is represented by a :lang() selectors
 		// is based solely on the element's language value
 		// being equal to the identifier C,
 		// or beginning with the identifier C immediately followed by "-".
@@ -2591,7 +2591,7 @@ function compile( selector, match /* Internal Use Only */ ) {
 		cached = compilerCache( selector,
 			matcherFromGroupMatchers( elementMatchers, setMatchers ) );
 
-		// Save selector and tokenization
+		// Save selectors and tokenization
 		cached.selector = selector;
 	}
 	return cached;
@@ -2599,9 +2599,9 @@ function compile( selector, match /* Internal Use Only */ ) {
 
 /**
  * A low-level selection function that works with jQuery's compiled
- *  selector functions
- * @param {String|Function} selector A selector or a pre-compiled
- *  selector function built with jQuery selector compile
+ *  selectors functions
+ * @param {String|Function} selector A selectors or a pre-compiled
+ *  selectors function built with jQuery selectors compile
  * @param {Element} context
  * @param {Array} [results]
  * @param {Array} [seed] A set of elements to match against
@@ -2613,11 +2613,11 @@ function select( selector, context, results, seed ) {
 
 	results = results || [];
 
-	// Try to minimize operations if there is only one selector in the list and no seed
+	// Try to minimize operations if there is only one selectors in the list and no seed
 	// (the latter of which guarantees us context)
 	if ( match.length === 1 ) {
 
-		// Reduce context if the leading compound selector is an ID
+		// Reduce context if the leading compound selectors is an ID
 		tokens = match[ 0 ] = match[ 0 ].slice( 0 );
 		if ( tokens.length > 2 && ( token = tokens[ 0 ] ).type === "ID" &&
 				context.nodeType === 9 && documentIsHTML && Expr.relative[ tokens[ 1 ].type ] ) {
@@ -2670,7 +2670,7 @@ function select( selector, context, results, seed ) {
 	}
 
 	// Compile and execute a filtering function if one is not provided
-	// Provide `match` to avoid retokenization if we modified the selector above
+	// Provide `match` to avoid retokenization if we modified the selectors above
 	( compiled || compile( selector, match ) )(
 		seed,
 		context,
@@ -2834,7 +2834,7 @@ jQuery.fn.extend( {
 		return !!winnow(
 			this,
 
-			// If this is a positional/relative selector, check membership in the returned set
+			// If this is a positional/relative selectors, check membership in the returned set
 			// so $("p:first").is("p:last") won't return true for a doc with two "p".
 			typeof selector === "string" && rneedsContext.test( selector ) ?
 				jQuery( selector ) :
@@ -3026,7 +3026,7 @@ jQuery.fn.extend( {
 			return ( this[ 0 ] && this[ 0 ].parentNode ) ? this.first().prevAll().length : -1;
 		}
 
-		// Index in selector
+		// Index in selectors
 		if ( typeof elem === "string" ) {
 			return indexOf.call( jQuery( elem ), this[ 0 ] );
 		}
@@ -4843,7 +4843,7 @@ function on( elem, types, selector, data, fn, one ) {
 	// Types can be a map of types/handlers
 	if ( typeof types === "object" ) {
 
-		// ( types-Object, selector, data )
+		// ( types-Object, selectors, data )
 		if ( typeof selector !== "string" ) {
 
 			// ( types-Object, data )
@@ -4864,7 +4864,7 @@ function on( elem, types, selector, data, fn, one ) {
 	} else if ( fn == null ) {
 		if ( typeof selector === "string" ) {
 
-			// ( types, selector, fn )
+			// ( types, selectors, fn )
 			fn = data;
 			data = undefined;
 		} else {
@@ -4966,7 +4966,7 @@ jQuery.event = {
 			// If event changes its type, use the special event handlers for the changed type
 			special = jQuery.event.special[ type ] || {};
 
-			// If selector defined, determine special event api type, otherwise given type
+			// If selectors defined, determine special event api type, otherwise given type
 			type = ( selector ? special.delegateType : special.bindType ) || type;
 
 			// Update special based on newly reset type
@@ -5755,7 +5755,7 @@ jQuery.fn.extend( {
 		}
 		if ( typeof types === "object" ) {
 
-			// ( types-object [, selector] )
+			// ( types-object [, selectors] )
 			for ( type in types ) {
 				this.off( type, selector, types[ type ] );
 			}
@@ -7426,7 +7426,7 @@ function Animation( elem, properties, options ) {
 		length = Animation.prefilters.length,
 		deferred = jQuery.Deferred().always( function() {
 
-			// Don't match elem in the :animated selector
+			// Don't match elem in the :animated selectors
 			delete tick.elem;
 		} ),
 		tick = function() {
@@ -10228,7 +10228,7 @@ jQuery.fn.load = function( url, params, callback ) {
 
 			self.html( selector ?
 
-				// If a selector was specified, locate the right elements in a dummy div
+				// If a selectors was specified, locate the right elements in a dummy div
 				// Exclude scripts to avoid IE 'Permission Denied' errors
 				jQuery( "<div>" ).append( jQuery.parseHTML( responseText ) ).find( selector ) :
 
@@ -10553,7 +10553,7 @@ jQuery.fn.extend( {
 	},
 	undelegate: function( selector, types, fn ) {
 
-		// ( namespace ) or ( selector, types [, fn] )
+		// ( namespace ) or ( selectors, types [, fn] )
 		return arguments.length === 1 ?
 			this.off( selector, "**" ) :
 			this.off( types, selector || "**", fn );

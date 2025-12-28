@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('product', '0007_product_name'),
     ]
@@ -21,9 +20,11 @@ class Migration(migrations.Migration):
             name='ProductImage',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(upload_to=apps.product.models.product_image_model.product_image_path, verbose_name='Image')),
+                ('image', models.ImageField(upload_to=apps.product.models.product_image_model.product_image_path,
+                                            verbose_name='Image')),
                 ('is_feature', models.BooleanField(default=False)),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='images', to='product.product')),
+                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='images',
+                                              to='product.product')),
             ],
             options={
                 'unique_together': {('product', 'is_feature')},

@@ -5,7 +5,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('action', '0003_postcomment_parent'),
         ('post', '0004_remove_post_title'),

@@ -21,7 +21,6 @@ class Post(BaseModel):
             is_active (BooleanField): Toggle to show/hide the post from the public feed.
     """
 
-
     product = models.ForeignKey(Product, related_name='posts', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
     caption = models.TextField(_('caption'), blank=True)

@@ -29,19 +29,19 @@ Requires core.js and SelectBox.js.
                 }
             }
 
-            // <div class="selector"> or <div class="selector stacked">
+            // <div class="selectors"> or <div class="selectors stacked">
             const selector_div = quickElement('div', from_box.parentNode);
-            // Make sure the selector div is at the beginning so that the
+            // Make sure the selectors div is at the beginning so that the
             // add link would be displayed to the right of the widget.
             from_box.parentNode.prepend(selector_div);
-            selector_div.className = is_stacked ? 'selector stacked' : 'selector';
+            selector_div.className = is_stacked ? 'selectors stacked' : 'selector';
 
-            // <div class="selector-available">
+            // <div class="selectors-available">
             const selector_available = quickElement('div', selector_div);
-            selector_available.className = 'selector-available';
+            selector_available.className = 'selectors-available';
             const selector_available_title = quickElement('div', selector_available);
             selector_available_title.id = field_id + '_from_title';
-            selector_available_title.className = 'selector-available-title';
+            selector_available_title.className = 'selectors-available-title';
             quickElement('label', selector_available_title, interpolate(gettext('Available %s') + ' ', [field_name]), 'for', field_id + '_from');
             quickElement(
                 'p',
@@ -51,7 +51,7 @@ Requires core.js and SelectBox.js.
             );
 
             const filter_p = quickElement('p', selector_available, '', 'id', field_id + '_filter');
-            filter_p.className = 'selector-filter';
+            filter_p.className = 'selectors-filter';
 
             const search_filter_label = quickElement('label', filter_p, '', 'for', field_id + '_input');
 
@@ -72,19 +72,19 @@ Requires core.js and SelectBox.js.
                 selector_available,
                 interpolate(gettext('Choose all %s'), [field_name]),
                 'id', field_id + '_add_all',
-                'class', 'selector-chooseall',
+                'class', 'selectors-chooseall',
                 'type', 'button'
             );
 
-            // <ul class="selector-chooser">
+            // <ul class="selectors-chooser">
             const selector_chooser = quickElement('ul', selector_div);
-            selector_chooser.className = 'selector-chooser';
+            selector_chooser.className = 'selectors-chooser';
             const add_button = quickElement(
                 'button',
                 quickElement('li', selector_chooser),
                 interpolate(gettext('Choose selected %s'), [field_name]),
                 'id', field_id + '_add',
-                'class', 'selector-add',
+                'class', 'selectors-add',
                 'type', 'button'
             );
             const remove_button = quickElement(
@@ -92,15 +92,15 @@ Requires core.js and SelectBox.js.
                 quickElement('li', selector_chooser),
                 interpolate(gettext('Remove selected %s'), [field_name]),
                 'id', field_id + '_remove',
-                'class', 'selector-remove',
+                'class', 'selectors-remove',
                 'type', 'button'
             );
 
-            // <div class="selector-chosen">
+            // <div class="selectors-chosen">
             const selector_chosen = quickElement('div', selector_div, '', 'id', field_id + '_selector_chosen');
-            selector_chosen.className = 'selector-chosen';
+            selector_chosen.className = 'selectors-chosen';
             const selector_chosen_title = quickElement('div', selector_chosen);
-            selector_chosen_title.className = 'selector-chosen-title';
+            selector_chosen_title.className = 'selectors-chosen-title';
             selector_chosen_title.id = field_id + '_to_title';
             quickElement('label', selector_chosen_title, interpolate(gettext('Chosen %s') + ' ', [field_name]), 'for', field_id + '_to');
             quickElement(
@@ -111,7 +111,7 @@ Requires core.js and SelectBox.js.
             );
             
             const filter_selected_p = quickElement('p', selector_chosen, '', 'id', field_id + '_filter_selected');
-            filter_selected_p.className = 'selector-filter';
+            filter_selected_p.className = 'selectors-filter';
 
             const search_filter_selected_label = quickElement('label', filter_selected_p, '', 'for', field_id + '_selected_input');
 
@@ -145,7 +145,7 @@ Requires core.js and SelectBox.js.
                 selector_chosen,
                 interpolate(gettext('Remove all %s'), [field_name]),
                 'id', field_id + '_remove_all',
-                'class', 'selector-clearall',
+                'class', 'selectors-clearall',
                 'type', 'button'
             );
 
@@ -242,7 +242,7 @@ Requires core.js and SelectBox.js.
                 count
             ), [count]);
             if(count > 0) {
-                selector.className += ' selector-chosen--with-filtered';
+                selector.className += ' selectors-chosen--with-filtered';
             }
         },
         refresh_filtered_selects: function(field_id) {

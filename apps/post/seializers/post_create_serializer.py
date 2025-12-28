@@ -11,7 +11,6 @@ class PostCreateSerializer(serializers.ModelSerializer):
         - Includes custom field validation for 'price'.
     """
 
-
     user = serializers.CharField(source='user.username', read_only=True)
 
     def validate_price(self, value):
@@ -23,7 +22,6 @@ class PostCreateSerializer(serializers.ModelSerializer):
             Raises:
                 ValidationError: If price is less than or equal to 0.
         """
-
 
         if value <= 0:
             raise serializers.ValidationError("Price must be greater than 0")

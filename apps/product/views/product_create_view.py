@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.throttling import UserRateThrottle
 from ..serializers.product_create_serializer import ProductCreateSerializer
-from ...lib.permissions import IsAdminOrReadOnly
-from ...lib.loggers import AppLogger
+from apps.product.services.services import product_create_service
+from ...lib.permissions import IsAdmin
 
 
 class ProductCreateAPIView(APIView):
@@ -17,20 +17,10 @@ class ProductCreateAPIView(APIView):
         - Automation: Automatically assigns the logged-in user to the product.
     """
 
-
-    permission_classes = [IsAdminOrReadOnly]
-    serializer_class = ProductCreateSerializer
+    permission_classes = [IsAdmin]
     throttle_classes = [UserRateThrottle]
 
     def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-
-        if serializer.is_valid():
-            product = serializer.save(user=request.user)
-
-            AppLogger.log_activity(f"Product Created: {product.name} (ID: {product.id})", user=request.user)
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        AppLogger.log_activity(f"Product Create Failed: {serializer.errors}", user=request.user, status="ERROR")
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        product = product_create_service(user=request.user, data=request.data)
+        serializer = ProductCreateSerializer(product)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

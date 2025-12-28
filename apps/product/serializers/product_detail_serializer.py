@@ -24,7 +24,6 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             - The username of the admin who created the record.
     """
 
-
     user = serializers.CharField(source='user.username', read_only=True)
     images = ProductImageSerializer(many=True, read_only=True)
     brand_name = serializers.CharField(source='brand.name', read_only=True)

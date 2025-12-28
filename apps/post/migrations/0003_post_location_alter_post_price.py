@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('post', '0002_remove_post_text_post_caption_post_title'),
     ]

@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -24,8 +23,10 @@ class Migration(migrations.Migration):
                 ('text', models.TextField()),
                 ('price', models.DecimalField(decimal_places=2, default=0.0, max_digits=10)),
                 ('is_active', models.BooleanField(default=True)),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='posts', to='product.product')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='posts', to=settings.AUTH_USER_MODEL)),
+                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='posts',
+                                              to='product.product')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='posts',
+                                           to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'verbose_name': 'Post',

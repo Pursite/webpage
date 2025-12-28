@@ -21,8 +21,6 @@ class Product(BaseModel):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products', verbose_name="Category")
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name='products', verbose_name="Brand")
 
-
-
     class Meta:
         verbose_name = _("Product")
         verbose_name_plural = _("Products")

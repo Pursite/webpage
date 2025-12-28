@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('product', '0005_brand_category_alter_product_brand_and_more'),
     ]

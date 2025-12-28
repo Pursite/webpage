@@ -4,7 +4,6 @@ from .views.product_create_view import ProductCreateAPIView
 from .views.product_list_view import ProductListAPIView
 from .views.product_detail_view import ProductDetailAPIView
 
-
 urlpatterns = [
     path('categories/', CategoryListAPIView.as_view(), name='category-list'),
     path('brands/', BrandListAPIView.as_view(), name='brand-list'),

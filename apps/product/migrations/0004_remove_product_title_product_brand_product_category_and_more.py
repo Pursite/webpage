@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('product', '0003_alter_product_title_alter_product_user'),
     ]

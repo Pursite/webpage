@@ -714,7 +714,7 @@ S2.define('select2/utils',[
     // and adapted by @BillBarry on the Stack Exchange Code Review website.
     // The original code can be found at
     // http://codereview.stackexchange.com/q/13338
-    // and was designed to be used with the Sizzle selector engine.
+    // and was designed to be used with the Sizzle selectors engine.
 
     var $el = $(el);
     var overflowX = el.style.overflowX;
