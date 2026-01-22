@@ -1,6 +1,6 @@
 from django.db import models
 from .product_model import Product
-import os, uuid
+import uuid
 
 
 def product_image_path(instance, filename):

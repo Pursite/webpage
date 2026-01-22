@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from .product_detail_serializer import ProductImageSerializer
 from ..models.product_model import Product
 
 

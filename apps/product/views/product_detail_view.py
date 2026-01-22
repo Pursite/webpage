@@ -1,13 +1,17 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from ..selectors.selectors import product_detail_selector
+from ..selectors.product_detail_selector import product_detail_selector
 from ..serializers.product_detail_serializer import ProductDetailSerializer
 from ..serializers.product_create_serializer import ProductCreateSerializer
-from apps.product.services.services import product_update_service, product_delete_service
+from apps.product.services.product_update_service import product_update_service
+from apps.product.services.product_delete_service import product_delete_service
 from ...lib.permissions import IsAdminOrReadOnly
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 
+@method_decorator(cache_page(600), name='dispatch')
 class ProductDetailAPIView(APIView):
     """
         Retrieve, update, or delete a specific product instance.

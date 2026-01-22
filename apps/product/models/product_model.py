@@ -16,7 +16,12 @@ class Product(BaseModel):
             BaseModel: Provides created_at and updated_at timestamps.
     """
 
-    user = models.ForeignKey(User, related_name='products', on_delete=models.CASCADE, blank=True)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="products",
+        blank=True,
+    )
     name = models.CharField(_("Product name"), max_length=255, db_index=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products', verbose_name="Category")
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name='products', verbose_name="Brand")

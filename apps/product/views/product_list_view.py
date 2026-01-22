@@ -3,12 +3,14 @@ from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
-from ..selectors.selectors import product_list_selector
+from ..selectors.product_list_selector import product_list_selector
 from ..serializers.product_list_serializer import ProductListSerializer
 from ...lib.pagination import StandardPagePagination
 from ...lib.permissions import IsAdminOrReadOnly
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
-
+@method_decorator(cache_page(600), name='dispatch')
 class ProductListAPIView(APIView):
     """
         Advanced Product Catalog List View.
@@ -42,3 +44,4 @@ class ProductListAPIView(APIView):
 
         serializer = ProductListSerializer(products, many=True)
         return Response(serializer.data)
+

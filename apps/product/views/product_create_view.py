@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.throttling import UserRateThrottle
 from ..serializers.product_create_serializer import ProductCreateSerializer
-from apps.product.services.services import product_create_service
+from ..services.product_create_service import product_create_service
 from ...lib.permissions import IsAdmin
 
 

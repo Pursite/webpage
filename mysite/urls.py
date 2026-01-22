@@ -25,7 +25,8 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token-obtain-pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
     path('api/action/', include('apps.action.urls'), name='token-refresh'),
-    path('api/product/', include('apps.product.urls')),
-    path('api/post/', include('apps.post.urls')),
+    path('api/product/', include('apps.product.urls', namespace='product')),
+    path('api/post/', include('apps.post.urls', namespace='post')),
+    path('api/account/', include('apps.account.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

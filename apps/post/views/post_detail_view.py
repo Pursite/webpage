@@ -2,13 +2,16 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from ..seializers.post_create_serializer import PostCreateSerializer
-from ..seializers.post_detail_serializer import PostDetailSerializer
-from ..selectors.selectors import post_detail_selector
-from ..services.services import post_update_service, post_delete_service
+from ..serializers.post_detail_serializer import PostDetailSerializer
+from ..selectors.post_detail_selector import post_detail_selector
+from ..services.post_update_service import post_update_service
+from ..services.post_delete_service import post_delete_service
 from ...lib.permissions import IsOwnerOrReadOnly
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 
+@method_decorator(cache_page(600), name='dispatch')
 class PostDetailAPIView(APIView):
     """
         Manage individual posts: View, Update (Full/Partial), or Delete.
@@ -30,12 +33,12 @@ class PostDetailAPIView(APIView):
 
     def put(self, request, pk):
         post = post_update_service(post_id=pk, user=request.user, data=request.data, partial=False)
-        serializer = PostCreateSerializer(post)
+        serializer = PostDetailSerializer(post)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def patch(self, request, pk):
         post = post_update_service(post_id=pk, user=request.user, data=request.data, partial=True)
-        serializer = PostCreateSerializer(post)
+        serializer = PostDetailSerializer(post)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def delete(self, request, pk):

@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.throttling import UserRateThrottle
 from ..serializers.comment_create_serializer import CommentCreateSerializer
 from ..serializers.comment_detail_serializer import CommentDetailSerializer
-from ..services.services import comment_create_service
+from ..services.comment_create_service import comment_create_service
 
 
 class CommentCreateAPIView(APIView):

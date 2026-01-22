@@ -16,7 +16,7 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ("user__username", "id")
     ordering = ("created_at",)
     readonly_fields = ("created_at", "modified_at")
-    inlines = [ProductImageInline]
+    inlines = [ProductImageInline, ]
 
 
 @admin.register(Category)
